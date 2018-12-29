@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ½«ÀÏµÄÏîÄ¿¸üÃû²¢Ìá½»µ½ĞÂµÄGIT²Ö¿â
+# å°†è€çš„é¡¹ç›®æ›´åå¹¶æäº¤åˆ°æ–°çš„GITä»“åº“
 CIVET_MANAGE_DIR='D:\Workspace\old-project'
 SWEET_MANAGE='D:\Workspace\new-project'
 
@@ -22,15 +22,16 @@ function fun_branch() {
 cd $CIVET_MANAGE_DIR
 for civetModule in `ls .`
 do
+    #if [ -d "$dir" ]
     if [[ $civetModule =~ 'base' ]];
     then
-        echo 'Ìø¹ı¹¤³Ì'$civetModule
+        echo 'è·³è¿‡å·¥ç¨‹'$civetModule
     else
-        echo '½øÈëÔ´Ä¿Â¼'$civetModule'´ò°üzip'
+        echo 'è¿›å…¥æºç›®å½•'$civetModule'æ‰“åŒ…zip'
         cd $CIVET_MANAGE_DIR'/'$civetModule
         curBranch=`fun_git_branch`
         pullBranch=`fun_branch $civetModule`
-        echo 'µ±Ç°·ÖÖ§'$curBranch'ÇĞ»»µ½'$pullBranch
+        echo 'å½“å‰åˆ†æ”¯'$curBranch'åˆ‡æ¢åˆ°'$pullBranch
 
         outZip=source.zip
         if [[ $curBranch != $pullBranch ]];
@@ -38,14 +39,14 @@ do
             git checkout $pullBranch
             git pull
             git archive --output=$outZip --format=zip $pullBranch -0
-            echo '´ò°ü·ÖÖ§'$pullBranch'zip°üÍê³É'
-            echo 'ÇĞ»Ø·ÖÖ§'$curBranch
+            echo 'æ‰“åŒ…åˆ†æ”¯'$pullBranch'zipåŒ…å®Œæˆ'
+            echo 'åˆ‡å›åˆ†æ”¯'$curBranch
             git checkout $curBranch
         else
             git archive --output=$outZip --format=zip $pullBranch -0
         fi
 
-        echo '½øÈëÄ¿±êÄ¿Â¼, ½âÑ¹zip²¢push'
+        echo 'è¿›å…¥ç›®æ ‡ç›®å½•, è§£å‹zipå¹¶push'
         cd $SWEET_MANAGE
 
         sweetModule=sweet-$civetModule
